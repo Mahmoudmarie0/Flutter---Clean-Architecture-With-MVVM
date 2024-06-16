@@ -48,5 +48,16 @@ ThemeData getApplicationTheme() {
             borderRadius: BorderRadius.circular(AppSize.s12),
           ),
         ),
+      ),
+
+      //Text Theme
+
+      textTheme: TextTheme(
+        displayLarge: getSemiBoldStyle(
+            color: ColorManager.darkGrey, fontSize: FontSizeManager.s16),
+        titleMedium: getMediumStyle(
+            color: ColorManager.lightGrey, fontSize: FontSizeManager.s14),
+        bodySmall: getRegularStyle(color: ColorManager.grey1),
+        bodyLarge: getRegularStyle(color: ColorManager.grey),
       ));
 }
