@@ -4,7 +4,6 @@ class FontConstants {
   static const String fontFamily = "Montserrat";
 }
 
-
 class FontWeightManager {
   static const FontWeight bold = FontWeight.w700;
   static const FontWeight semiBold = FontWeight.w600;
@@ -12,7 +11,6 @@ class FontWeightManager {
   static const FontWeight regular = FontWeight.w400;
   static const FontWeight light = FontWeight.w300;
 }
-
 
 class FontSizeManager {
   static const double s12 = 12.0;
