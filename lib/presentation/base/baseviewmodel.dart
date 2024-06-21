@@ -1,5 +1,5 @@
 //contain all the variables and methods that are common to all view models
-abstract class BaseViewModel {
+abstract class BaseViewModel extends BaseViewModelInputs with BaseViewModelOutputs{
 
 }
 
