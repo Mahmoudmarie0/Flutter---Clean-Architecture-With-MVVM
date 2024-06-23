@@ -97,7 +97,7 @@ inputSliderViewObject.add( SliderViewObject(_list[_currentIndex], _list.length, 
 
 //inputs mean the orders that our view model will recieve from view
 mixin OnBoardingViewModelInputs{
-  void goNext();//when user clicks on right arrow or swipe
+ void goNext();//when user clicks on right arrow or swipe
  void goPrevious();//when user clicks on left arrow or swipe
 void onPageChanged(int index);
 Sink get inputSliderViewObject;  //way to add data to stream
