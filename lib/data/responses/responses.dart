@@ -1,4 +1,4 @@
-
+//json annotation used for json serialization to handle json data responses
 import 'package:json_annotation/json_annotation.dart';
 part 'responses.g.dart';
 @JsonSerializable()

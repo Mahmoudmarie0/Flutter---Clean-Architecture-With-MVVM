@@ -55,7 +55,7 @@ _list = _getSliderData();
   }
 
   @override
-  // TODO: implement outputSliderViewObject
+  //  implement outputSliderViewObject
   //recieve slider object
   //do anything that object receives
   Stream<SliderViewObject> get outputSliderViewObject => _streamController.stream.map((SliderViewObject) => SliderViewObject);
@@ -87,7 +87,7 @@ inputSliderViewObject.add( SliderViewObject(_list[_currentIndex], _list.length, 
 
 
   @override
-  // TODO: implement sliderViewObject
+  //  implement sliderViewObject
   //add slider object
   Sink get inputSliderViewObject => _streamController.sink;
 
