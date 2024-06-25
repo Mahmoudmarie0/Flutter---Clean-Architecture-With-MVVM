@@ -1,17 +1,16 @@
+
 import 'package:clean_architecture_with_mvvm/domain/model.dart';
 import 'package:clean_architecture_with_mvvm/presentation/onboarding/view_model.dart';
-import 'package:clean_architecture_with_mvvm/presentation/resources/assets_manager.dart';
-import 'package:clean_architecture_with_mvvm/presentation/resources/strings_manager.dart';
-import 'package:clean_architecture_with_mvvm/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/svg.dart';
-
 import '../resources/color_manager.dart';
+import '../resources/strings_manager.dart'; // assuming you have these imports correctly managed
+import '../resources/values_manager.dart';
+import '../resources/assets_manager.dart';
 
 class OnBoardingView extends StatefulWidget {
-  const OnBoardingView({super.key});
+  const OnBoardingView({Key? key}) : super(key: key);
 
   @override
   State<OnBoardingView> createState() => _OnBoardingViewState();
@@ -21,14 +20,21 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   final PageController _pageController = PageController(initialPage: 0);
   final OnBoardingViewModel _viewModel = OnBoardingViewModel();
 
+  @override
+  void initState() {
+    super.initState();
+    _binding();
+  }
+
   void _binding() {
     _viewModel.start();
+    _viewModel.goNext();
   }
 
   @override
-  void initState() {
-    _binding();
-    super.initState();
+  void dispose() {
+    _viewModel.dispose();
+    super.dispose();
   }
 
   @override
@@ -36,16 +42,21 @@ class _OnBoardingViewState extends State<OnBoardingView> {
     return StreamBuilder<SliderViewObject>(
       stream: _viewModel.outputSliderViewObject,
       builder: (context, snapshot) {
-        return _getContentWidget(snapshot.data);
+        if (snapshot.hasData) {
+          return _getContentWidget(snapshot.data!);
+        } else {
+          // Handle when data is not yet available
+          return Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
       },
     );
   }
 
-  Widget _getContentWidget(SliderViewObject? data) {
-    if (data == null) {
-      return const Center(child: CircularProgressIndicator());
-    }
-
+  Widget _getContentWidget(SliderViewObject data) {
     return Scaffold(
       backgroundColor: ColorManager.white,
       appBar: AppBar(
@@ -61,7 +72,9 @@ class _OnBoardingViewState extends State<OnBoardingView> {
         controller: _pageController,
         itemCount: data.numOfSlides,
         onPageChanged: (index) {
-          _viewModel.onPageChanged(index);
+          setState(() {
+            _viewModel.onPageChanged(index);
+          });
         },
         itemBuilder: (context, index) {
           return OnBoardingPage(data.sliderObject);
@@ -75,9 +88,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
-                onPressed: () {
-                  // Handle skip action
-                },
+                onPressed: () {},
                 child: Text(
                   AppStrings.skip,
                   textAlign: TextAlign.end,
@@ -98,7 +109,6 @@ class _OnBoardingViewState extends State<OnBoardingView> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // left arrow
           Padding(
             padding: const EdgeInsets.all(AppPadding.p14),
             child: GestureDetector(
@@ -118,17 +128,15 @@ class _OnBoardingViewState extends State<OnBoardingView> {
               },
             ),
           ),
-          // circle indicator
           Row(
-            children: List.generate(
-              sliderViewObject.numOfSlides,
-                  (index) => Padding(
-                padding: const EdgeInsets.all(AppPadding.p8),
-                child: _getProperCircle(index, sliderViewObject.currentIndex),
-              ),
-            ),
+            children: [
+              for (int i = 0; i < sliderViewObject.numOfSlides; i++)
+                Padding(
+                  padding: const EdgeInsets.all(AppPadding.p8),
+                  child: _getProperCircle(i, sliderViewObject.currentIndex),
+                )
+            ],
           ),
-          // right arrow
           Padding(
             padding: const EdgeInsets.all(AppPadding.p14),
             child: GestureDetector(
@@ -155,34 +163,30 @@ class _OnBoardingViewState extends State<OnBoardingView> {
 
   Widget _getProperCircle(int index, int currentIndex) {
     if (currentIndex == index) {
-      return SvgPicture.asset(ImageAssets.hollowCirlceIc); // selected slider
+      return SvgPicture.asset(ImageAssets.hollowCirlceIc); // Selected slider
     } else {
-      return SvgPicture.asset(ImageAssets.solidCircleIc); // unselected slider
+      return SvgPicture.asset(ImageAssets.solidCircleIc); // Unselected slider
     }
-  }
-
-  @override
-  void dispose() {
-    _viewModel.dispose();
-    super.dispose();
   }
 }
 
 class OnBoardingPage extends StatelessWidget {
   final SliderObject sliderObject;
 
-  const OnBoardingPage(this.sliderObject, {super.key});
+  const OnBoardingPage(this.sliderObject);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const SizedBox(height: AppSize.s40),
+        const SizedBox(
+          height: AppSize.s40,
+        ),
         Padding(
           padding: const EdgeInsets.all(AppPadding.p8),
           child: Text(
-            sliderObject.title.toString(),
+            sliderObject.title,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.displayLarge,
           ),
@@ -190,15 +194,16 @@ class OnBoardingPage extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(AppPadding.p8),
           child: Text(
-            sliderObject.subTitle.toString(),
+            sliderObject.subTitle,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
-        const SizedBox(height: AppSize.s60),
+        const SizedBox(
+          height: AppSize.s60,
+        ),
         SvgPicture.asset(
           sliderObject.image,
-          // Replace with appropriate dimensions or fit properties
         ),
       ],
     );
