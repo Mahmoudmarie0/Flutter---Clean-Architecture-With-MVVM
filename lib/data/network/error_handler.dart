@@ -1,3 +1,5 @@
+import 'package:clean_architecture_with_mvvm/data/network/failure.dart';
+
 enum DataSource {
   SUCCESS,
   NO_CONTENT,
@@ -36,6 +38,58 @@ class ResponseCode {
   static const int CACHE_ERROR = -6;
   static const int NO_INTERNET_CONNECTION = -7;
 }
+
+extension DataSourceResponseExtension on DataSource {
+ Failure getFailure() {
+   switch (this) {
+     case DataSource.SUCCESS:
+       return Failure(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
+       // TODO: Handle this case.
+     case DataSource.NO_CONTENT:
+       return Failure(ResponseCode.NO_CONTENT, ResponseMessage.NO_CONTENT);
+       // TODO: Handle this case.
+     case DataSource.BAD_REQUEST://
+       return Failure(ResponseCode.BAD_REQUEST, ResponseMessage.BAD_REQUEST);
+       // TODO: Handle this case.
+     case DataSource.FORBIDDEN://
+       return Failure(ResponseCode.FORBIDDEN, ResponseMessage.FORBIDDEN);
+       // TODO: Handle this case.
+     case DataSource.NOT_FOUND://
+       return Failure(ResponseCode.NOT_FOUND, ResponseMessage.NOT_FOUND);
+       // TODO: Handle this case.
+     case DataSource.INTERNAL_SERVER_ERROR:///
+       return Failure(ResponseCode.INTERNAL_SERVER_ERROR, ResponseMessage.INTERNAL_SERVER_ERROR);
+       // TODO: Handle this case.
+     case DataSource.CONNECT_TIMEOUT://
+       return Failure(ResponseCode.CONNECT_TIMEOUT, ResponseMessage.CONNECT_TIMEOUT);
+       // TODO: Handle this case.
+     case DataSource.CANCEL://
+       return Failure(ResponseCode.CANCEL, ResponseMessage.CANCEL);
+       // TODO: Handle this case.
+     case DataSource.RECEIVE_TIMEOUT://
+       return Failure(ResponseCode.RECEIVE_TIMEOUT, ResponseMessage.RECEIVE_TIMEOUT);
+       // TODO: Handle this case.
+     case DataSource.SEND_TIMEOUT://
+       return Failure(ResponseCode.SEND_TIMEOUT, ResponseMessage.SEND_TIMEOUT);
+       // TODO: Handle this case.
+     case DataSource.CACHE_ERROR://
+       return Failure(ResponseCode.CACHE_ERROR, ResponseMessage.CACHE_ERROR);
+       // TODO: Handle this case.
+     case DataSource.NO_INTERNET_CONNECTION://
+       return Failure(ResponseCode.NO_INTERNET_CONNECTION, ResponseMessage.NO_INTERNET_CONNECTION);
+       // TODO: Handle this case.
+     case DataSource.UNAUthORIZED://
+       return Failure(ResponseCode.UNAUthORIZED, ResponseMessage.UNAUthORIZED);
+       // TODO: Handle this case.
+       break;
+       default:
+         return Failure(ResponseCode.UNKNOWN, ResponseMessage.UNKNOWN);
+   }
+
+  }
+
+}
+
 
 
 class ResponseMessage{
