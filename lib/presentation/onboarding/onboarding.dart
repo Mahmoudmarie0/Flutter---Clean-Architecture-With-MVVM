@@ -1,5 +1,5 @@
 
-import 'package:clean_architecture_with_mvvm/domain/model.dart';
+import 'package:clean_architecture_with_mvvm/domain/model/model.dart';
 import 'package:clean_architecture_with_mvvm/presentation/onboarding/view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

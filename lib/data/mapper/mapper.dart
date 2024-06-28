@@ -3,7 +3,7 @@
 
 
   import 'package:clean_architecture_with_mvvm/data/responses/responses.dart';
-import 'package:clean_architecture_with_mvvm/domain/model.dart';
+import 'package:clean_architecture_with_mvvm/domain/model/model.dart';
 import 'package:clean_architecture_with_mvvm/app/extensions.dart';
 
 
