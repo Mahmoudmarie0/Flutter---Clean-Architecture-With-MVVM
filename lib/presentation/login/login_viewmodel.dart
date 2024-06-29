@@ -1,24 +1,31 @@
+import 'dart:async';
+
 import 'package:clean_architecture_with_mvvm/presentation/base/baseviewmodel.dart';
 
 class LoginViewmodel extends BaseViewModel with LoginViewModelInputs,LoginViewModelOutputs{
-  @override
+
+  StreamController _userNameStreamController = StreamController<String>.broadcast();
+  StreamController _passwordStreamController = StreamController<String>.broadcast();
   //input from user
   void dispose() {
+    _userNameStreamController.close();
+    _passwordStreamController.close();
     // TODO: implement dispose
   }
 
   @override
   void start() {
+
     // TODO: implement start
   }
 
   @override
   // TODO: implement inputPassword
-  Sink get inputPassword => throw UnimplementedError();
+  Sink get inputPassword => _passwordStreamController.sink;
 
   @override
   // TODO: implement inputUserName
-  Sink get inputUserName => throw UnimplementedError();
+  Sink get inputUserName => _userNameStreamController.sink;
 
   @override
   login() {
@@ -43,17 +50,27 @@ class LoginViewmodel extends BaseViewModel with LoginViewModelInputs,LoginViewMo
 
   @override
   // TODO: implement outputIsPasswordValid
-  Stream<bool> get outputIsPasswordValid => throw UnimplementedError();
+  Stream<bool> get outputIsPasswordValid => _passwordStreamController.stream.map((password) => _isPasswordValid(password));
 
   @override
   // TODO: implement outputIsUserValid
-  Stream<bool> get outputIsUserValid => throw UnimplementedError();
+  Stream<bool> get outputIsUserValid => _userNameStreamController.stream.map((userName) => _isUserNameValid(userName));
+
+
+  bool _isPasswordValid(String password){
+    return password.isNotEmpty;
+  }
+
+  bool _isUserNameValid(String userName){
+    return userName.isNotEmpty;
+  }
+
 
 
 }
 
 
-abstract class LoginViewModelInputs{
+mixin  LoginViewModelInputs{
   //three functions for actions
   setUserName(String userName);
   setPassword(String password);
@@ -63,7 +80,7 @@ abstract class LoginViewModelInputs{
  Sink get inputPassword;
 }
 
-abstract class LoginViewModelOutputs{
+mixin LoginViewModelOutputs{
   //tow stream because we have two sink
   Stream<bool> get outputIsUserValid;
   Stream<bool> get outputIsPasswordValid;
