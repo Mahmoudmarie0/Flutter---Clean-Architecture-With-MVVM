@@ -1,3 +1,4 @@
+import 'package:clean_architecture_with_mvvm/app/functions.dart';
 import 'package:clean_architecture_with_mvvm/data/network/failure.dart';
 import 'package:clean_architecture_with_mvvm/data/request/request.dart';
 import 'package:clean_architecture_with_mvvm/domain/model/model.dart';
@@ -11,8 +12,9 @@ class LoginUsecase implements BaseUsecase<LoginUsecaseInput,Authentication>{
 
   @override
   Future<Either<Failure, Authentication>> execute(LoginUsecaseInput input)async {
+    DeviceInfo deviceInfo = await getDeviceDetails();
     // TODO: implement execute
-    await repository.login(LoginRequest(email: input.email, password: input.password, imei: 'imei', deviceType: 'deviceType'));
+   return await repository.login(LoginRequest( input.email, input.password,  deviceInfo.identifier!,  deviceInfo.name!));
   }
 
 
