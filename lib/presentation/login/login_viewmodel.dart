@@ -1,11 +1,16 @@
 import 'dart:async';
 
+import 'package:clean_architecture_with_mvvm/domain/usecase/login_usecase.dart';
 import 'package:clean_architecture_with_mvvm/presentation/base/baseviewmodel.dart';
+import 'package:clean_architecture_with_mvvm/presentation/common/freezed_data_classes.dart';
 
 class LoginViewmodel extends BaseViewModel with LoginViewModelInputs,LoginViewModelOutputs{
 
   StreamController _userNameStreamController = StreamController<String>.broadcast();
   StreamController _passwordStreamController = StreamController<String>.broadcast();
+  var loginObject = LoginObject("", "");
+  LoginUsecase?loginUsecase;
+  LoginViewmodel(this.loginUsecase);
   //input from user
   void dispose() {
     _userNameStreamController.close();
@@ -28,20 +33,32 @@ class LoginViewmodel extends BaseViewModel with LoginViewModelInputs,LoginViewMo
   Sink get inputUserName => _userNameStreamController.sink;
 
   @override
-  login() {
+  login() async{
     // TODO: implement login
-    throw UnimplementedError();
+    ( await loginUsecase.execute(LoginUsecaseInput(loginObject.userName, loginObject.password))).fold(
+            (failure) => {
+              //left-->failure
+              print("failure ${failure.message}"),
+
+
+
+            }, (data) =>{
+              //right-->success
+               print(data.customer?.name),
+    });
   }
   @override
   setPassword(String password) {
     // TODO: implement setPassword
-    throw UnimplementedError();
+    inputPassword.add(password);
+    loginObject=loginObject.copyWith(password: password);//data class operation same as kotlin
   }
 
   @override
   setUserName(String userName) {
     // TODO: implement setUserName
-    throw UnimplementedError();
+    inputUserName.add(userName);
+    loginObject=loginObject.copyWith(userName: userName);
   }
 //output
   @override
