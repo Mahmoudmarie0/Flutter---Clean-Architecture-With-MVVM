@@ -47,6 +47,7 @@ dependencies:
   shared_preferences: ^2.2.3
   device_info_plus: ^10.1.0
   freezed: ^2.5.2
+  get_it: ^7.7.0
 
 dev_dependencies:
   flutter_test:
@@ -84,7 +85,8 @@ flutter:
       - assets/images/left_arrow_ic.svg
       - assets/images/right_arrow_ic.svg
       - assets/images/solid_circle_ic.svg
-      - assets/images/logo_icon.svg
+
+
 
 
 

@@ -1,6 +1,7 @@
 
 import 'package:clean_architecture_with_mvvm/domain/model/model.dart';
 import 'package:clean_architecture_with_mvvm/presentation/onboarding/view_model.dart';
+import 'package:clean_architecture_with_mvvm/presentation/resources/routes_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -88,7 +89,9 @@ class _OnBoardingViewState extends State<OnBoardingView> {
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, Routes.loginRoute);
+                },
                 child: Text(
                   AppStrings.skip,
                   textAlign: TextAlign.end,
