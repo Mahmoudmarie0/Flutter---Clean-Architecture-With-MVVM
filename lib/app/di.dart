@@ -3,6 +3,8 @@ import 'package:clean_architecture_with_mvvm/data/data_source/remote_data_source
 import 'package:clean_architecture_with_mvvm/data/network/app_api.dart';
 import 'package:clean_architecture_with_mvvm/data/repository/repositery.impl.dart';
 import 'package:clean_architecture_with_mvvm/domain/repository/repository.dart';
+import 'package:clean_architecture_with_mvvm/domain/usecase/login_usecase.dart';
+import 'package:clean_architecture_with_mvvm/presentation/login/login_viewmodel.dart';
 import 'package:dio/src/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -39,5 +41,17 @@ Future<void> initAppModule() async {
 
   //repository
   instance.registerLazySingleton<Repository>(() => RepositoryImpl(instance(),instance()));
+initLoginModule();
+
 
 }
+
+//should call when open login screen
+initLoginModule(){
+  if(!GetIt.I.isRegistered<LoginUsecase>()){
+    instance.registerFactory<LoginUsecase>(() => LoginUsecase(instance()));
+    instance.registerFactory<LoginViewmodel>(() => LoginViewmodel(instance()));
+  }
+}
+
+

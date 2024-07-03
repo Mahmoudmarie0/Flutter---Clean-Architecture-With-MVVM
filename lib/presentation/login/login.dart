@@ -1,3 +1,4 @@
+import 'package:clean_architecture_with_mvvm/app/di.dart';
 import 'package:clean_architecture_with_mvvm/domain/repository/repository.dart';
 import 'package:clean_architecture_with_mvvm/domain/usecase/login_usecase.dart';
 import 'package:clean_architecture_with_mvvm/presentation/login/login_viewmodel.dart';
@@ -17,8 +18,8 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
- 
-  LoginViewmodel loginViewmodel = LoginViewmodel(loginUsecase); //pass here loginUsecase
+
+  LoginViewmodel loginViewmodel = instance<LoginViewmodel>(); //pass here loginUsecase
   TextEditingController _userNameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
