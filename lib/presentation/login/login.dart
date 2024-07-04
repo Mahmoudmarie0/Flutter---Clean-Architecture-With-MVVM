@@ -1,6 +1,4 @@
 import 'package:clean_architecture_with_mvvm/app/di.dart';
-import 'package:clean_architecture_with_mvvm/domain/repository/repository.dart';
-import 'package:clean_architecture_with_mvvm/domain/usecase/login_usecase.dart';
 import 'package:clean_architecture_with_mvvm/presentation/login/login_viewmodel.dart';
 import 'package:clean_architecture_with_mvvm/presentation/resources/assets_manager.dart';
 import 'package:clean_architecture_with_mvvm/presentation/resources/color_manager.dart';
@@ -8,7 +6,7 @@ import 'package:clean_architecture_with_mvvm/presentation/resources/routes_manag
 import 'package:clean_architecture_with_mvvm/presentation/resources/strings_manager.dart';
 import 'package:clean_architecture_with_mvvm/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -54,7 +52,7 @@ class _LoginViewState extends State<LoginView> {
             key: _formKey,
             child: Column(
               children: [
-                Image(
+              const  Image(
                   image: AssetImage(ImageAssets.splashLogo),
                 ),
                 const SizedBox(

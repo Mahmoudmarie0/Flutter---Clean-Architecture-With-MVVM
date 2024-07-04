@@ -12,7 +12,7 @@ const String Authorization = "authorization";
 const String DEFAULT_LANGUAGE = "language";
 class DioFactory{
   AppPrefrences appPrefrences;
-  DioFactory(this.appPrefrences);
+  DioFactory(this.appPrefrences, );
   Future<Dio> getDio()async{
     Dio dio = Dio();
     int _timeOut=60*1000; //1 min

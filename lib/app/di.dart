@@ -33,8 +33,8 @@ Future<void> initAppModule() async {
 
   //app service client
 
-  final dio =  instance<DioFactory>().getDio();
-  instance.registerLazySingleton<AppServiceClient>(() => AppServiceClient(dio as Dio));
+    final dio =  instance<DioFactory>().getDio();
+  instance.registerLazySingleton<AppServiceClient>(() => AppServiceClient( dio as Dio));
 
   //remote data source
   instance.registerLazySingleton<RemoteDataSource>(() => RemoteDataSourceImplementer(instance()));
