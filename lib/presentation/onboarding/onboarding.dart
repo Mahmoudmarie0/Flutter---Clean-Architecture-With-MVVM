@@ -1,4 +1,3 @@
-
 import 'package:clean_architecture_with_mvvm/domain/model/model.dart';
 import 'package:clean_architecture_with_mvvm/presentation/onboarding/view_model.dart';
 import 'package:clean_architecture_with_mvvm/presentation/resources/routes_manager.dart';
@@ -11,7 +10,7 @@ import '../resources/values_manager.dart';
 import '../resources/assets_manager.dart';
 
 class OnBoardingView extends StatefulWidget {
-  const OnBoardingView({Key? key}) : super(key: key);
+  const OnBoardingView({super.key});
 
   @override
   State<OnBoardingView> createState() => _OnBoardingViewState();
@@ -47,7 +46,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
           return _getContentWidget(snapshot.data!);
         } else {
           // Handle when data is not yet available
-          return Scaffold(
+          return const Scaffold(
             body: Center(
               child: CircularProgressIndicator(),
             ),
@@ -176,7 +175,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
 class OnBoardingPage extends StatelessWidget {
   final SliderObject sliderObject;
 
-  const OnBoardingPage(this.sliderObject);
+  const OnBoardingPage(this.sliderObject, {super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -17,15 +17,12 @@
 // //send this data to our view
 //     _postDataToView();
 
-
 //   }
-
 
 //   @override
 //   void dispose() {
 //     _streamController.close();
 //   }
-
 
 //   @override
 //   int goNext() {
@@ -50,7 +47,6 @@
 //   void onPageChanged(int index) {
 //     _currentIndex = index;
 //     _postDataToView();
-
 
 //   }
 
@@ -85,15 +81,12 @@
 // inputSliderViewObject.add( SliderViewObject(_list[_currentIndex], _list.length, _currentIndex));
 //   }
 
-
 //   @override
 //   //  implement sliderViewObject
 //   //add slider object
 //   Sink get inputSliderViewObject => _streamController.sink;
 
-
 // }
-
 
 // //inputs mean the orders that our view model will recieve from view
 // mixin OnBoardingViewModelInputs{
@@ -102,7 +95,6 @@
 // void onPageChanged(int index);
 // Sink get inputSliderViewObject;  //way to add data to stream
 // }
-
 
 // //outputs mean data or results that will be sent from our view model to our view
 // mixin OnBoardingViewModelOutputs {
@@ -118,8 +110,6 @@
 //  SliderViewObject( this.sliderObject, this.numOfSlides, this.currentIndex);
 // }
 
-
-
 import 'dart:async';
 
 import 'package:clean_architecture_with_mvvm/domain/model/model.dart';
@@ -127,10 +117,12 @@ import 'package:clean_architecture_with_mvvm/presentation/base/baseviewmodel.dar
 import 'package:clean_architecture_with_mvvm/presentation/resources/assets_manager.dart';
 import 'package:clean_architecture_with_mvvm/presentation/resources/strings_manager.dart';
 
-class OnBoardingViewModel extends BaseViewModel with OnBoardingViewModelInputs, OnBoardingViewModelOutputs {
+class OnBoardingViewModel extends BaseViewModel
+    with OnBoardingViewModelInputs, OnBoardingViewModelOutputs {
   late List<SliderObject> _list;
   int _currentIndex = 0;
-  final StreamController<SliderViewObject> _streamController = StreamController<SliderViewObject>();
+  final StreamController<SliderViewObject> _streamController =
+      StreamController<SliderViewObject>();
 
   @override
   void start() {
@@ -164,17 +156,23 @@ class OnBoardingViewModel extends BaseViewModel with OnBoardingViewModelInputs, 
   }
 
   @override
-  Stream<SliderViewObject> get outputSliderViewObject => _streamController.stream;
+  Stream<SliderViewObject> get outputSliderViewObject =>
+      _streamController.stream;
 
   List<SliderObject> _getSliderData() => [
-        SliderObject(AppStrings.onBoardingTitle1, AppStrings.onBoardingSubTitle1, ImageAssets.onboardingLogo1),
-        SliderObject(AppStrings.onBoardingTitle2, AppStrings.onBoardingSubTitle2, ImageAssets.onboardingLogo2),
-        SliderObject(AppStrings.onBoardingTitle3, AppStrings.onBoardingSubTitle3, ImageAssets.onboardingLogo3),
-        SliderObject(AppStrings.onBoardingTitle4, AppStrings.onBoardingSubTitle4, ImageAssets.onboardingLogo4),
+        SliderObject(AppStrings.onBoardingTitle1,
+            AppStrings.onBoardingSubTitle1, ImageAssets.onboardingLogo1),
+        SliderObject(AppStrings.onBoardingTitle2,
+            AppStrings.onBoardingSubTitle2, ImageAssets.onboardingLogo2),
+        SliderObject(AppStrings.onBoardingTitle3,
+            AppStrings.onBoardingSubTitle3, ImageAssets.onboardingLogo3),
+        SliderObject(AppStrings.onBoardingTitle4,
+            AppStrings.onBoardingSubTitle4, ImageAssets.onboardingLogo4),
       ];
 
   void _postDataToView() {
-    inputSliderViewObject.add(SliderViewObject(_list[_currentIndex], _list.length, _currentIndex));
+    inputSliderViewObject.add(
+        SliderViewObject(_list[_currentIndex], _list.length, _currentIndex));
   }
 
   @override
@@ -198,4 +196,3 @@ class SliderViewObject {
   int currentIndex;
   SliderViewObject(this.sliderObject, this.numOfSlides, this.currentIndex);
 }
-

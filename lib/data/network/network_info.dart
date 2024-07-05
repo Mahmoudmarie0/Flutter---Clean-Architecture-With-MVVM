@@ -1,12 +1,12 @@
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
-abstract class NewtworkInfo{
+abstract class NewtworkInfo {
   Future<bool> get isConnected;
 }
 
-class NetworkInfoImpl implements NewtworkInfo{
-  InternetConnectionChecker _dataConnectionChecker;
+class NetworkInfoImpl implements NewtworkInfo {
+  final InternetConnectionChecker _dataConnectionChecker;
   NetworkInfoImpl(this._dataConnectionChecker);
   @override
-  Future<bool> get isConnected =>  _dataConnectionChecker.hasConnection; 
+  Future<bool> get isConnected => _dataConnectionChecker.hasConnection;
 }

@@ -10,31 +10,21 @@ Future<DeviceInfo> getDeviceDetails() async {
   String identifier = 'Unknown';
 
   DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
-  try{
-    if(Platform.isAndroid){
+  try {
+    if (Platform.isAndroid) {
       var build = await deviceInfoPlugin.androidInfo;
-      name = build.brand+" "+build.model;
+      name = "${build.brand} ${build.model}";
       version = build.version.codename;
       identifier = build.id;
-
-    }else if(Platform.isIOS){
+    } else if (Platform.isIOS) {
       var build = await deviceInfoPlugin.iosInfo;
-      name = build.name+" "+build.model;
+      name = "${build.name} ${build.model}";
       version = build.systemVersion;
       identifier = build.identifierForVendor!;
-
     }
-
-  }on PlatformException {
+  } on PlatformException {
     return DeviceInfo(name, version, identifier);
-
   }
 
   return DeviceInfo(name, version, identifier);
-
-
-
-
-
-
 }

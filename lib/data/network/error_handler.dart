@@ -22,7 +22,7 @@ enum DataSource {
 class ErrorHandler implements Exception {
   late Failure failure;
   ErrorHandler.handle(dynamic error) {
-    if (error is DioError) {
+    if (error is DioException) {
       // dio error so its error response
       failure = _handleError(error);
     } else {
@@ -30,7 +30,7 @@ class ErrorHandler implements Exception {
     }
   }
 
-  Failure _handleError(DioError error) {
+  Failure _handleError(DioException error) {
     switch (error.type) {
       case DioExceptionType.connectionTimeout:
         return DataSource.CONNECT_TIMEOUT.getFailure();
@@ -71,10 +71,10 @@ class ErrorHandler implements Exception {
         return DataSource.DEFAULT.getFailure();
       case DioExceptionType.badCertificate:
         return DataSource.DEFAULT.getFailure();
-        // TODO: Handle this case.
+      // TODO: Handle this case.
       case DioExceptionType.connectionError:
         return DataSource.DEFAULT.getFailure();
-        // TODO: Handle this case.
+      // TODO: Handle this case.
     }
   }
 }
@@ -91,7 +91,7 @@ class ResponseCode {
       500; //failure with internal server error
 
   //local status codes
-  static const int UNKNOWN = -1;
+  static const int DEFAULT = -1;
   static const int CONNECT_TIMEOUT = -2;
   static const int CANCEL = -3;
   static const int RECEIVE_TIMEOUT = -4;
@@ -147,10 +147,12 @@ extension DataSourceResponseExtension on DataSource {
       // TODO: Handle this case.
       case DataSource.UNAUthORIZED: //
         return Failure(ResponseCode.UNAUthORIZED, ResponseMessage.UNAUthORIZED);
-        // TODO: Handle this case.
+      // TODO: Handle this case.
+      case DataSource.DEFAULT: //
+        return Failure(ResponseCode.DEFAULT, ResponseMessage.DEFAULT);
         break;
       default:
-        return Failure(ResponseCode.UNKNOWN, ResponseMessage.UNKNOWN);
+        return Failure(ResponseCode.DEFAULT, ResponseMessage.DEFAULT);
     }
   }
 }
@@ -172,7 +174,7 @@ class ResponseMessage {
       "some thing went wrong, try again later"; //failure with internal server error
 
   //local status codes
-  static const String UNKNOWN = "some thing went wrong, try again later";
+  static const String DEFAULT = "some thing went wrong, try again later";
   static const String CONNECT_TIMEOUT = "time out error, try again later";
   static const String CANCEL = "Request was cancelled, try again later";
   static const String RECEIVE_TIMEOUT = "time out error, try again later";
@@ -181,8 +183,6 @@ class ResponseMessage {
   static const String NO_INTERNET_CONNECTION =
       "please check your internet connection";
 }
-
-
 
 class ApiInternalStatus {
   static const int SUCCESS = 0;

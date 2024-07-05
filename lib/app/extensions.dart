@@ -1,4 +1,3 @@
-
 //extension  on String?
 import 'package:clean_architecture_with_mvvm/data/mapper/mapper.dart';
 
@@ -9,11 +8,9 @@ extension NonNullString on String? {
     } else {
       return this!;
     }
-
   }
 }
 //dd
-
 
 //extension  on int?
 extension NonNullInteger on int? {
@@ -23,6 +20,5 @@ extension NonNullInteger on int? {
     } else {
       return this!;
     }
-
   }
 }

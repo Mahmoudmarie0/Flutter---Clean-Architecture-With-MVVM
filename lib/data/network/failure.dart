@@ -1,5 +1,11 @@
-class Failure{
-int code;//200 or 400
-String message; //error or succes
-Failure(this.code, this.message);
+import 'package:clean_architecture_with_mvvm/data/network/error_handler.dart';
+
+class Failure {
+  int code; //200 or 400
+  String message; //error or succes
+  Failure(this.code, this.message);
+}
+
+class DefaultFailure extends Failure {
+  DefaultFailure() : super(ResponseCode.DEFAULT, ResponseMessage.DEFAULT);
 }

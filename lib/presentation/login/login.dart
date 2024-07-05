@@ -7,7 +7,6 @@ import 'package:clean_architecture_with_mvvm/presentation/resources/strings_mana
 import 'package:clean_architecture_with_mvvm/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 
-
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
 
@@ -16,10 +15,10 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-
-  LoginViewmodel loginViewmodel = instance<LoginViewmodel>(); //pass here loginUsecase
-  TextEditingController _userNameController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  LoginViewmodel loginViewmodel =
+      instance<LoginViewmodel>(); //pass here loginUsecase
+  final TextEditingController _userNameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   _bind() {
     loginViewmodel.start();
@@ -52,7 +51,7 @@ class _LoginViewState extends State<LoginView> {
             key: _formKey,
             child: Column(
               children: [
-              const  Image(
+                const Image(
                   image: AssetImage(ImageAssets.splashLogo),
                 ),
                 const SizedBox(
@@ -125,46 +124,39 @@ class _LoginViewState extends State<LoginView> {
                         );
                       },
                     )),
-
-                   Padding(
-                     padding: const EdgeInsets.only(top: AppPadding.p8,right: AppPadding.p28,left: AppPadding.p28),
-                   child: Row(
-                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                     children: [
-                       TextButton(
-                         onPressed: () {
-                           Navigator.pushReplacementNamed(context, Routes.forgetPasswordRoute);
-                         },
-                         child: Text(
-                           AppStrings.forgetPassword,
-                           textAlign: TextAlign.end,
-                           style: Theme.of(context).textTheme.titleSmall,
-                         ),
-                       ),
-                       TextButton(
-                         onPressed: () {
-                           Navigator.pushReplacementNamed(context, Routes.registerRoute);
-                         },
-                         child: Text(
-                           AppStrings.registerText,
-                           textAlign: TextAlign.end,
-                           style: Theme.of(context).textTheme.titleSmall,
-                         ),
-                       ),
-                     ],
-                   )
-
-
-
-
-
-                     ,),
-
-
-
-
-
-
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: AppPadding.p8,
+                      right: AppPadding.p28,
+                      left: AppPadding.p28),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(
+                              context, Routes.forgetPasswordRoute);
+                        },
+                        child: Text(
+                          AppStrings.forgetPassword,
+                          textAlign: TextAlign.end,
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(
+                              context, Routes.registerRoute);
+                        },
+                        child: Text(
+                          AppStrings.registerText,
+                          textAlign: TextAlign.end,
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
