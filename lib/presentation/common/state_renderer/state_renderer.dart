@@ -1,8 +1,12 @@
 import 'package:clean_architecture_with_mvvm/presentation/resources/strings_manager.dart';
+import 'package:clean_architecture_with_mvvm/presentation/resources/styles_manager.dart';
+import 'package:clean_architecture_with_mvvm/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 
 import '../../../data/mapper/mapper.dart';
 import '../../../data/network/failure.dart';
+import '../../resources/color_manager.dart';
+import '../../resources/font_manager.dart';
 
 enum StateRendererType {
   // pop up states
@@ -39,45 +43,62 @@ class StateRenderer extends StatelessWidget {
     return const Placeholder();
   }
 
-
-  Widget _getStateWidget(){
+  Widget _getStateWidget() {
     switch (stateRendererType) {
       case StateRendererType.POPUP_LOADING_STATE:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
       case StateRendererType.POPUP_ERROR_STATE:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
       case StateRendererType.FULL_SCREEN_LOADING_STATE:
-        // _getItemsInColummn()
-           // break;
+        return _getItemsInColummn([_getAnimatedImages(), _getMessage(message)]);
+
       case StateRendererType.FULL_SCREEN_ERROR_STATE:
-        // TODO: Handle this case.
+        return _getItemsInColummn([
+          _getAnimatedImages(),
+          _getMessage(failure.message),
+          _getRetryButton(AppStrings.retry_again)
+        ]);
+
+      // TODO: Handle this case.
       case StateRendererType.CONTENT_SCREEN_STATE:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
       case StateRendererType.EMPTY_SCREEN_STATE:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
       default:
         return Container();
     }
   }
 
-  Widget _getItemsInColummn(List<Widget> children){
-    return Center(
-      child: Column(
-        mainAxisAlignment:MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: children,
-
-
-
-
-
-
-
-      ),
+  Widget _getAnimatedImages() {
+    return const SizedBox(
+      height: AppSize.s100,
+      width: AppSize.s100,
+      child: Text("dd"),
     );
-
-
   }
 
+  Widget _getItemsInColummn(List<Widget> children) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: children,
+      ),
+    );
+  }
 
+  Widget _getMessage(String message) {
+    return Text(
+      message,
+      style: getMediumStyle(
+          color: ColorManager.black, fontSize: FontSizeManager.s16),
+    );
+  }
+
+  Widget _getRetryButton(String buttonTitle) {
+    return ElevatedButton(
+      onPressed: () {},
+      child: const Text("dl"),
+    );
+  }
 }
