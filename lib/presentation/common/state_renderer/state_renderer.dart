@@ -25,7 +25,7 @@ class StateRenderer extends StatelessWidget {
   Failure failure;
   String message;
   String title;
-  Function retryActionFunction;
+  Function? retryActionFunction;
 
   StateRenderer(
       {required this.stateRendererType,
@@ -40,10 +40,10 @@ class StateRenderer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return _getStateWidget(context);
   }
 
-  Widget _getStateWidget() {
+  Widget _getStateWidget(BuildContext context) {
     switch (stateRendererType) {
       case StateRendererType.POPUP_LOADING_STATE:
       // TODO: Handle this case.
@@ -56,7 +56,7 @@ class StateRenderer extends StatelessWidget {
         return _getItemsInColummn([
           _getAnimatedImages(),
           _getMessage(failure.message),
-          _getRetryButton(AppStrings.retry_again)
+          _getRetryButton(AppStrings.retry_again, context)
         ]);
 
       // TODO: Handle this case.
@@ -88,17 +88,40 @@ class StateRenderer extends StatelessWidget {
   }
 
   Widget _getMessage(String message) {
-    return Text(
-      message,
-      style: getMediumStyle(
-          color: ColorManager.black, fontSize: FontSizeManager.s16),
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(AppPadding.p18),
+        child: Text(
+          message,
+          style: getMediumStyle(
+              color: ColorManager.black, fontSize: FontSizeManager.s16),
+        ),
+      ),
     );
   }
 
-  Widget _getRetryButton(String buttonTitle) {
-    return ElevatedButton(
-      onPressed: () {},
-      child: const Text("dl"),
+  Widget _getRetryButton(String buttonTitle, BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(AppPadding.p18),
+        child: SizedBox(
+          width: AppSize.s180,
+          child: ElevatedButton(
+            onPressed: () {
+              if (stateRendererType ==
+                  StateRendererType.FULL_SCREEN_ERROR_STATE) {
+                retryActionFunction
+                    ?.call(); //to call api function again to retry
+              } else {
+                //pop error screen
+                Navigator.of(context)
+                    .pop(); //pop error screen so we need to dismiss the dialog
+              }
+            },
+            child: const Text("dl"),
+          ),
+        ),
+      ),
     );
   }
 }
