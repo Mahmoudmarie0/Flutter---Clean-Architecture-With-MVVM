@@ -46,6 +46,7 @@ class StateRenderer extends StatelessWidget {
   Widget _getStateWidget(BuildContext context) {
     switch (stateRendererType) {
       case StateRendererType.POPUP_LOADING_STATE:
+        return _getPopupDialog(context,)
       // TODO: Handle this case.
       case StateRendererType.POPUP_ERROR_STATE:
       // TODO: Handle this case.
@@ -63,11 +64,53 @@ class StateRenderer extends StatelessWidget {
       case StateRendererType.CONTENT_SCREEN_STATE:
       // TODO: Handle this case.
       case StateRendererType.EMPTY_SCREEN_STATE:
-      // TODO: Handle this case.
+        return _getItemsInColummn([
+          _getAnimatedImages(),
+          _getMessage(message),
+        ]);
       default:
         return Container();
     }
   }
+
+  Widget _getPopupDialog(BuildContext context){
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppSize.s14),
+      ),
+      elevation: AppSize.s1_5,
+      backgroundColor: Colors.transparent,
+      child: Container(
+        decoration: BoxDecoration(
+          color: ColorManager.white,
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(AppSize.s14),
+          boxShadow: [BoxShadow(color: Colors.black26, blurRadius: AppSize.s12, offset: Offset(AppSize.s0, AppSize.s12))],
+        ),
+        child: _getDialogContent(context),
+      ),
+
+
+    );
+
+
+
+  }
+
+  Widget _getDialogContent(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        _getAnimatedImages(),
+        _getMessage(message),
+        _getRetryButton(AppStrings.retry_again, context)
+      ],
+    );
+  }
+
+
 
   Widget _getAnimatedImages() {
     return const SizedBox(
