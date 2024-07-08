@@ -46,9 +46,14 @@ class StateRenderer extends StatelessWidget {
   Widget _getStateWidget(BuildContext context) {
     switch (stateRendererType) {
       case StateRendererType.POPUP_LOADING_STATE:
-        return _getPopupDialog(context,)
+        return _getPopupDialog(context, [_getAnimatedImages()]);
       // TODO: Handle this case.
       case StateRendererType.POPUP_ERROR_STATE:
+        return _getPopupDialog(context, [
+          _getAnimatedImages(),
+          _getMessage(failure.message),
+          _getRetryButton(AppStrings.ok, context)
+        ]);
       // TODO: Handle this case.
       case StateRendererType.FULL_SCREEN_LOADING_STATE:
         return _getItemsInColummn([_getAnimatedImages(), _getMessage(message)]);
@@ -62,6 +67,7 @@ class StateRenderer extends StatelessWidget {
 
       // TODO: Handle this case.
       case StateRendererType.CONTENT_SCREEN_STATE:
+        return Container();
       // TODO: Handle this case.
       case StateRendererType.EMPTY_SCREEN_STATE:
         return _getItemsInColummn([
@@ -73,7 +79,7 @@ class StateRenderer extends StatelessWidget {
     }
   }
 
-  Widget _getPopupDialog(BuildContext context){
+  Widget _getPopupDialog(BuildContext context, List<Widget> children) {
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppSize.s14),
@@ -85,19 +91,19 @@ class StateRenderer extends StatelessWidget {
           color: ColorManager.white,
           shape: BoxShape.rectangle,
           borderRadius: BorderRadius.circular(AppSize.s14),
-          boxShadow: [BoxShadow(color: Colors.black26, blurRadius: AppSize.s12, offset: Offset(AppSize.s0, AppSize.s12))],
+          boxShadow: const [
+            BoxShadow(
+                color: Colors.black26,
+                blurRadius: AppSize.s12,
+                offset: Offset(AppSize.s0, AppSize.s12))
+          ],
         ),
-        child: _getDialogContent(context),
+        child: _getDialogContent(context, children),
       ),
-
-
     );
-
-
-
   }
 
-  Widget _getDialogContent(BuildContext context) {
+  Widget _getDialogContent(BuildContext context, List<Widget> children) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -109,8 +115,6 @@ class StateRenderer extends StatelessWidget {
       ],
     );
   }
-
-
 
   Widget _getAnimatedImages() {
     return const SizedBox(
